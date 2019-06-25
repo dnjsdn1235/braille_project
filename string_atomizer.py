@@ -14,25 +14,34 @@ class StringAtomizer:
 
         self.HANGEUL_REGEX = re.compile(r'[ㄱ-ㅎ가-힣]+')
     def atomizeString(self, string):
+        # 입력받은 문자열 예시: '가나다 wo라rd 마!'
+
         # 입력받은 문자열을 리스트화한다.
+        # 예) ['가', '나', '다', ' ', 'w','o','라','r','d', ' ', '마','!']
         resultString = list(string)
 
         # 한국어로 된 모든 단어의 Match Object를 얻어낸다.
+        # 예) [MatchObject('가나다'), MatchObject('라'), MatchObject('마')]
         koreanWordMatches = self.HANGEUL_REGEX.finditer(string)
 
         # Match Objects 순회
         for m in koreanWordMatches:
-            word = list(m.group()) # 결과 단어 문자열을 리스트화한다.
+            # 결과 단어 문자열을 리스트화 한다.
+            # 예) ['가', '나', '다'](반복 1회차), ['라'], ['마']
+            word = list(m.group())
             buffer = [] 
 
             # 리스트화 된 단어를 문자단위로 순회
             for syllable in word:
                 # 분리시킨 문자를 임시 결과 버퍼에 저장
+                # 반복 결과 예) [('ㄱ', 'ㅏ', ''), ('ㄴ', 'ㅏ', ''), ('ㄷ', 'ㅏ', '')]
                 buffer.append(self.separateKoreanLetters(syllable))
             
             # 원래 단어가 존재하던 인덱스를 구해낸다.
+            # '가나다'의 경우 (0, 3), '라'의 경우 (6, 7) ...
             start, end = m.span()
             # 최종 결과 문자열에서 원래 있던 문자열을 원자화한 문자들로 바꾼다.
+            # ['가', '나', '다', ...] => [('ㄱ', 'ㅏ', ''), ('ㄴ', 'ㅏ', ''), ('ㄷ', 'ㅏ', ''), ...]
             resultString[start:end] = buffer
 
         return resultString
