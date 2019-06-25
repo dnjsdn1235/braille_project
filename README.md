@@ -1,18 +1,13 @@
-# braille_project
-gntech
-
 # 한이음 점자 프로젝트
-# document.py 문제점 
-# 1. 영어. 숫자 포함시 분리 못하고 생략됨.
-# 2. "안녕" =  ['ㅇ', 'ㅏ', 'ㄴ', 'ㄴ', 'ㅕ', 'ㅇ'] 출력됨 > 배열로 불러오면 ' 
+Python과 Tesseract, PDF raw 데이터 추출을 통해 문자를 얻어내고, 이를 분리하여 점자 데이터로 출력
 
-# 3. test[1] = ' (작은 따옴표)  
-# 3. test[2] = ㅇ 
-# 3. test[3] = ' 
-# 3. test[4] = ,
-# 3. test[5] = '
-# 3. test[6] = ㅏ
-
-# 이렇게 나옴. '문자와 , 문자 걸러야함.
-
-# 한글분리 jamos.toolkit 이용.
+## 파일 구조
+```
+project
+│   README.md
+│   string_atomizer.py => 문자열 분리 처리를 담당하는 라이브러리
+│
+└───testsuite
+    │
+    └───document.py => 테스트 스크립트
+```
